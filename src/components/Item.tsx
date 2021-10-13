@@ -4,19 +4,26 @@ import { CartItemType } from "../App";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 15rem;
-
   img {
     width: 10rem;
     height: 12rem;
     display: block;
     margin: 0 auto;
   }
+
   button {
     background-color: #001219;
-    padding: 1em;
+    padding: 0.8em;
+    font-size: 1.1rem;
+    font-weight: 500;
     color: white;
+    margin: 1em 0;
+  }
+
+  button:hover {
+    background-color: #1d3557;
+    transition: 0.5s;
   }
 
   h3 {

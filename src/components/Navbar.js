@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Cart from "./Cart";
 import { IoCartOutline, IoCloseOutline } from "react-icons/io5";
 
 export const StyledNav = styled.nav`
@@ -19,12 +20,13 @@ export const CartContainer = styled.div`
 export const Sidebar = styled.div`
   position: fixed;
   height: 100%;
-  width: 200px;
+  overflow-y: auto;
+  width: 25rem;
   background-color: #001219;
   z-index: 2;
   top: 0;
   right: 0;
-  transition: 0.5s;
+
   div {
     display: flex;
     justify-content: flex-end;
@@ -38,7 +40,7 @@ export const StyledCartIcon = styled(IoCartOutline)`
 `;
 
 export const StyledCloseIcon = styled(IoCloseOutline)`
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   cursor: pointer;
 `;
 
@@ -52,10 +54,17 @@ export const NumberOfItems = styled.span`
   right: 0;
 `;
 
-const Navbar = ({ cartOpen, setCartOpen, getTotalItems, cartItems }) => {
+const Navbar = ({
+  cartOpen,
+  setCartOpen,
+  getTotalItems,
+  cartItems,
+  handleAddToCart,
+  handleRemoveFromCart,
+}) => {
   return (
     <StyledNav>
-      <h1>SHopping Cart</h1>
+      <h1>SHOPPING CART</h1>
       <div>
         <CartContainer>
           <StyledCartIcon onClick={() => setCartOpen(true)} />
@@ -65,6 +74,11 @@ const Navbar = ({ cartOpen, setCartOpen, getTotalItems, cartItems }) => {
           <Sidebar>
             <div>
               <StyledCloseIcon onClick={() => setCartOpen(false)} />
+              <Cart
+                cartItems={cartItems}
+                addToCart={handleAddToCart}
+                removeFromCart={handleRemoveFromCart}
+              />
             </div>
           </Sidebar>
         )}

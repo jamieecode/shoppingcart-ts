@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 //styles
 const Container = styled.section`
   width: 80%;
-  margin: 0 auto;
+  margin: 1em auto;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -41,9 +41,34 @@ const App = () => {
   );
   console.log(data);
 
-  const getTotalItems = (items: CartItemType[]) => null;
-  const handleAddToCart = (clickedItem: CartItemType) => null;
-  const handleRemoveFromCart = () => null;
+  const getTotalItems = (items: CartItemType[]) =>
+    items.reduce((acc, item) => acc + item.amount, 0);
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems((prev) => {
+      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+      if (isItemInCart) {
+        return prev.map((item) =>
+          item.id === clickedItem.id
+            ? { ...item, amount: item.amount + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...clickedItem, amount: 1 }];
+    });
+  };
+
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems((prev) =>
+      prev.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, { ...item, amount: item.amount - 1 }];
+        } else {
+          return [...acc, item];
+        }
+      }, [] as CartItemType[])
+    );
+  };
 
   if (isLoading) return <div>loading...</div>;
   if (error) return <div>Something went wrong...</div>;
@@ -55,6 +80,8 @@ const App = () => {
         setCartOpen={setCartOpen}
         getTotalItems={getTotalItems}
         cartItems={cartItems}
+        handleAddToCart={handleAddToCart}
+        handleRemoveFromCart={handleRemoveFromCart}
       />
       <Container>
         {data?.map((item) => (

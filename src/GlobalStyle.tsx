@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
   padding: 0;
 }
 
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 button {
   cursor: pointer;
   background: none;
